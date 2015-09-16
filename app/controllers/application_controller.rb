@@ -21,6 +21,18 @@ class ApplicationController < ActionController::Base
 
   end
 
+  def index
+
+    @articles = Article.all
+
+  end
+
+  def show
+
+    @article = Article.find(params[:id])
+
+  end
+
   def new_article_params
 
     params.require(:article).permit(:title,:body)
