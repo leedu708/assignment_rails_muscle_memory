@@ -8,7 +8,7 @@ class ArticlesController < ApplicationController
 
   def create
 
-    @article = Article.new(new_article_params)
+    @article = Article.new(whitelisted_article_params)
     
     if @article.save
       redirect_to article_path(@article.id)
@@ -30,10 +30,28 @@ class ArticlesController < ApplicationController
 
   end
 
-  def new_article_params
+  def whitelisted_article_params
 
     params.require(:article).permit(:title,:body)
 
   end
-  
+
+  def edit
+
+    @article = Article.find(params[:id])
+
+  end
+
+  def update
+
+    @article = Article.find(params[:id])
+
+    if @article.update(whitelisted_article_params)
+      redirect_to article_path(@article.id)
+    else
+      render :edit
+    end
+
+  end
+
 end
